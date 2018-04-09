@@ -4,6 +4,7 @@ class Node {
     public $left;
     public $right;
     public $data;
+    public $count = 1;
 
     public function __construct($data, $left = null, $right = null) {
         $this->data = $data;
@@ -140,9 +141,27 @@ class BST {
         }
         return $node;
     }
+
+    function update($data) {
+        $grade = $this->find($data);
+        $grade->count++;
+        return $grade;
+    }
 }
 
-$nums = new BST();
+function prArray($arr) {
+    var_dump($arr);
+}
+
+function genArray($length) {
+    $arr = array();
+    for ($i = 0; $i < $length; $i++) {
+        $arr[] = rand(1, 100);
+    }
+    return $arr;
+}
+
+/*$nums = new BST();
 $nums->insert(23);
 $nums->insert(45);
 $nums->insert(16);
@@ -151,12 +170,8 @@ $nums->insert(3);
 $nums->insert(99);
 $nums->insert(22);
 
-//$r = $nums->root;
-//var_dump($r);
 
-
-
-echo "Inorder traversal: ";
+ echo "Inorder traversal: ";
 $nums->inOrder($nums->root);
 echo "<br>Preorder traversal: ";
 $nums->preOrder($nums->root);
@@ -164,7 +179,27 @@ echo "<br>Postorder traversal: ";
 $nums->postOrder($nums->root);
 echo "<br>Get min value: " . $nums->getMin();
 echo "<br>Get max value: " . $nums->getMax();
-/* $f = $nums->find(99);
-var_dump($f); */
+$f = $nums->find(99);
+var_dump($f);
 $nums->remove(23);
-var_dump($nums);
+var_dump($nums); */
+
+$grades = genArray(100);
+prArray($grades);
+$gradedistro = new BST();
+for ($i = 0; $i < count($grades); $i++) {
+    $g = $grades[$i];
+    $grade = $gradedistro->find($g);
+    if ($grade == null) {
+        $gradedistro->insert($g);
+    } else {
+        $gradedistro->update($g);
+    }
+}
+
+var_dump($gradedistro->find(78));
+var_dump($gradedistro->find(65));
+var_dump($gradedistro->find(23));
+var_dump($gradedistro->find(89));
+var_dump($gradedistro->find(100));
+var_dump($gradedistro);

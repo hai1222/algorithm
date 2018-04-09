@@ -1,5 +1,6 @@
 function Node(data, left, right) {
     this.data = data;
+    this.count = 1;
     this.left = left;
     this.right = right;
     this.show = show;
@@ -21,6 +22,7 @@ function BST() {
     this.remove = remove;
     this.removeNode = removeNode;
     this.getSmallest = getSmallest;
+    this.update = update;
 }
 
 function insert(data) {
@@ -108,7 +110,6 @@ function remove(data) {
 }
 
 function removeNode(node, data) {
-    debugger;
     if (node == null) {
         return null;
     }
@@ -142,7 +143,25 @@ function getSmallest(node) {
     return node;
 }
 
-var nums = new BST();
+function update(data) {
+    var grade = this.find(data);
+    grade.count++;
+    return grade;
+}
+
+function prArray(arr) {
+    console.log(arr);
+}
+
+function genArray(length) {
+    var arr = [];
+    for (var i = 0; i < length; ++i) {
+        arr[i] = Math.floor(Math.random() * 101);
+    }
+    return arr;
+}
+
+/*var nums = new BST();
 nums.insert(23);
 nums.insert(45);
 nums.insert(16);
@@ -150,7 +169,7 @@ nums.insert(37);
 nums.insert(3);
 nums.insert(99);
 nums.insert(22);
-/*console.log("Inorder traversal: ");
+console.log("Inorder traversal: ");
 inOrder(nums.root);
 console.log("Preorder traversal: ");
 preOrder(nums.root);
@@ -158,7 +177,27 @@ console.log("Postorder traversal: ");
 postOrder(nums.root);
 console.log("Get min vales: ", nums.getMin());
 console.log("Get max vales: ", nums.getMax());
-console.log(nums.find(4));*/
+console.log(nums.find(4));
 nums.remove(23);
 console.log(nums);
-inOrder(nums.root);
+inOrder(nums.root);*/
+
+var grades = genArray(100);
+prArray(grades);
+var gradedistro = new BST();
+for (var i = 0; i < grades.length; ++i) {
+    var g = grades[i];
+    var grade = gradedistro.find(g);
+    if (grade == null) {
+        gradedistro.insert(g);
+    } else {
+        gradedistro.update(g);
+    }
+}
+
+console.log(gradedistro.find(78));
+console.log(gradedistro.find(65));
+console.log(gradedistro.find(23));
+console.log(gradedistro.find(89));
+console.log(gradedistro.find(100));
+console.log(gradedistro);
