@@ -118,35 +118,36 @@ function topSort() {
     for (var i = 0; i < this.vertices; i++) {
         visited[i] = false;
     }
-    for (var i = 0; i < stack.length; i++) {
+    for (var i = 0; i < this.vertices; i++) {
         if (visited[i] == false) {
             this.topSortHelper(i, visited, stack);
         }
     }
     for (var i = 0; i < stack.length; i++) {
-        if (stack[i] != undefined && stack[i] != false) {
+        if (stack[i] !== undefined && stack[i] !== false) {
             console.log(this.vertexList[stack[i]]);
         }
     }
 }
 
 function topSortHelper(v, visited, stack) {
+    debugger;
     visited[v] = true;
-    for (var i = 0; i < this.adj[v].length; i++) {
-        if (!visited[this.adj[v][i]]) {
-            this.topSortHelper(visited[this.adj[v][i]], visited, stack);
+    for (var i = 1; i < this.adj[v].length; i++) {
+        if (this.adj[v][i] && !visited[this.adj[v][i]]) {
+            this.topSortHelper(this.adj[v][i], visited, stack);
         }
     }
     stack.push(v);
 }
 
-g = new Graph(5);
+/* g = new Graph(5);
 console.log(g);
 g.addEdge(0, 1);
 g.addEdge(0, 2);
 g.addEdge(1, 3);
 g.addEdge(2, 4);
-/* g.showGraph(); */
+g.showGraph();
 g.bfs(0)
 var vertex = 4;
 var paths = g.pathTo(vertex);
@@ -158,4 +159,13 @@ while (paths.length > 0) {
         s += paths.pop()
     }
 }
-console.log(s);
+console.log(s); */
+g = new Graph(6)
+g.addEdge(1, 2);
+g.addEdge(2, 5);
+g.addEdge(1, 3);
+g.addEdge(1, 4);
+g.addEdge(0, 1);
+g.vertexList = ["CS1", "CS2", "Data Structures", "Assembly Language", "Operating Systems", "Algorithms"];
+g.topSort();
+console.log(g);

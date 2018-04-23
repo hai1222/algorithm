@@ -1,5 +1,4 @@
 <?php
-
 class Vertex {
     public $label;
 
@@ -15,6 +14,8 @@ class Graph {
     public $adj = array();
     public $marked = array();
     public $edgeTo = [];
+    public $visited = [];
+    public $stack = [];
 
     public function __construct($v) {
         $this->vertices = $v;
@@ -24,6 +25,7 @@ class Graph {
         }
         for ($i = 0; $i < $this->vertices; $i++) {
             $this->marked[$i] = false;
+            $this->visited[$i] = false;
         }
     }
 
@@ -47,11 +49,12 @@ class Graph {
         }
     } */
 
-    public function showGraph() {
+    /* public function showGraph() {
         $visited = [];
         for ($i = 0; $i < $this->vertices; $i++) {
             echo $this->vertexList[$i] . ' -> ';
             $visited.push($this->vertexList[$i]);
+            array_push($visited, $this->vertexList[$i]);
             for ($j = 0; $j < $this->vertices; $j++) {
                 if (isset($this->adj[$i][$j]) && $this->adj[$i][$j] ! = false) {
                     if (!in_array($this->vertexList[$j], $visited)) {
@@ -61,7 +64,7 @@ class Graph {
             }
             array_pop($visited);
         }
-    }
+    } */
 
     public function dfs($v) {
         $this->marked[$v] = true;
@@ -112,40 +115,35 @@ class Graph {
     }
 
     public function topSort() {
-        $stack = [];
-        $visited = [];
         for ($i = 0; $i < $this->vertices; $i++) {
-            $visited[$i] = false;
-        }
-        for ($i = 0; $i < count($stack); $i++) {
-            if ($visited[$i] == false) {
-                $this->topSortHelper($i, $visited, $stack);
+            if ($this->visited[$i] == false) {
+                $this->topSortHelper($i);
             }
         }
-        foreach ($stack as $i) {
-            if ($i != false) {
+        foreach ($this->stack as $i) {
+            if ($i !== false) {
                 echo $this->vertexList[$i] . '<br>';
             }
         }
     }
 
-    public function topSortHelper($v, $visited, $stack) {
-        $visited[$v] = true;
+    public function topSortHelper($v) {
+        $this->visited[$v] = true;
         foreach ($this->adj[$v] as $w) {
-            if (!$visited[$w]) {
-                $this->topSortHelper($visited[$w], $visited, $stack);
+            if ($w && !$this->visited[$w]) {
+                $this->topSortHelper($w);
             }
         }
-        array_push($stack, $v);
+        array_push($this->stack, $v);
     }
 }
 
-$g = new Graph(5);
+/* $g = new Graph(5);
 $g->addEdge(0, 1);
 $g->addEdge(0, 2);
 $g->addEdge(1, 3);
 $g->addEdge(2, 4);
-/* $g->showGraph(); */
+$g->showGraph();
 $g->bfs(0);
 $vertex = 3;
 $paths = $g->pathTo($vertex);
@@ -155,4 +153,12 @@ while (count($paths) > 0) {
     } else {
         echo array_pop($paths);
     }
-}
+} */
+$g = new Graph(6);
+$g->addEdge(1, 2);
+$g->addEdge(2, 5);
+$g->addEdge(1, 3);
+$g->addEdge(1, 4);
+$g->addEdge(0, 1);
+$g->vertexList = ["CS1", "CS2", "Data Structures", "Assembly Language", "Operating Systems", "Algorithms"];
+$g->topSort();
