@@ -54,11 +54,39 @@ class CArray {
 			}
 		}
 	}
+
+	public function selectionSort() {
+		$min;
+		for ($outer = 0; $outer <= count($this->dataStore) - 2; ++$outer) {
+			$min = $outer;
+			for ($inner = $outer + 1; $inner <= count($this->dataStore) - 1; ++$inner) {
+				if ($this->dataStore[$inner] < $this->dataStore[$min]) {
+					$min = $inner;
+				}
+			}
+			$this->swap($this->dataStore, $outer, $min);
+			echo $this->toString();
+		}
+	}
+
+	public function insertionSort() {
+		$temp;
+		$inner;
+		for ($outer = 1; $outer <= count($this->dataStore) - 1; ++$outer) {
+			$temp = $this->dataStore[$outer];
+			$inner = $outer;
+			while ($inner > 0 && ($this->dataStore[$inner - 1] >= $temp)) {
+				$this->dataStore[$inner] = $this->dataStore[$inner - 1];
+				--$inner;
+			}
+			$this->dataStore[$inner] = $temp;
+		}
+	}
 }
 
 $numElements = 10;
 $myNums = new CArray($numElements);
 $myNums->setData();
 echo $myNums->toString();
-$myNums->bubbleSort();
+$myNums->insertionSort();
 echo $myNums->toString();
