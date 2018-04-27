@@ -65,14 +65,15 @@ class CArray {
 				}
 			}
 			$this->swap($this->dataStore, $outer, $min);
-			echo $this->toString();
+			//echo $this->toString();
 		}
 	}
 
 	public function insertionSort() {
 		$temp;
 		$inner;
-		for ($outer = 1; $outer <= count($this->dataStore) - 1; ++$outer) {
+		$length = count($this->dataStore);
+		for ($outer = 1; $outer <= $length - 1; ++$outer) {
 			$temp = $this->dataStore[$outer];
 			$inner = $outer;
 			while ($inner > 0 && ($this->dataStore[$inner - 1] >= $temp)) {
@@ -84,9 +85,23 @@ class CArray {
 	}
 }
 
-$numElements = 10;
+$numElements = 10000;
 $myNums = new CArray($numElements);
+/* $myNums->setData();
+$start = time();
+$myNums->bubbleSort();
+$stop = time();
+$elapsed = $stop - $start;
+echo "对" . $numElements . "个元素执行冒泡排序消耗的时间为：" . $elapsed . '秒<br>'; */
+/* $myNums->setData();
+$start = time();
+$myNums->selectionSort();
+$stop = time();
+$elapsed = $stop - $start;
+echo "对" . $numElements . "个元素执行选择排序消耗的时间为：" . $elapsed . '秒<br>'; */
 $myNums->setData();
-echo $myNums->toString();
+$start = time();
 $myNums->insertionSort();
-echo $myNums->toString();
+$stop = time();
+$elapsed = $stop - $start;
+echo "对" . $numElements . "个元素执行插入排序消耗的时间为：" . $elapsed . '秒<br>';

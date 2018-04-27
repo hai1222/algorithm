@@ -10,6 +10,9 @@ function CArray(numElements) {
     this.bubbleSort = bubbleSort;
     this.selectionSort = selectionSort;
     this.insertionSort = insertionSort;
+    this.shellsort = shellsort;
+    this.gaps = [5, 3, 1];
+    this.setGaps = setGaps;
 
     for (var i = 0; i < numElements; ++i) {
         this.dataStore[i] = i;
@@ -89,9 +92,46 @@ function insertionSort() {
     }
 }
 
+function shellsort() {
+    debugger;
+    for (var g = 0; g < this.gaps.length; ++g) {
+        for (var i = this.gaps[g]; i < this.dataStore.length; ++i) {
+            var temp = this.dataStore[i];
+            for (var j = i; j >= this.gaps[g] && this.dataStore[j-this.gaps[g]] > temp; j -= this.gaps[g]) {
+                this.dataStore[j] = this.dataStore[j - this.gaps[g]];
+            }
+            this.dataStore[j] = temp;
+        }
+    }
+}
+
+function setGaps(arr) {
+    this.gaps = arr;
+}
+
 var numElements = 10;
 var myNums = new CArray(numElements);
+/* myNums.setData();
+var start = new Date().getTime();
+myNums.bubbleSort();
+var stop = new Date().getTime();
+var elapsed = stop - start;
+console.log("对" + numElements + "个元素执行冒泡排序消耗的时间为：" + elapsed + "毫秒");
 myNums.setData();
-console.log(myNums.toString());
+start = new Date().getTime();
+myNums.selectionSort();
+stop = new Date().getTime();
+elapsed = stop - start;
+console.log("对" + numElements + "个元素执行选择排序消耗的时间为：" + elapsed + "毫秒");
+myNums.setData();
+start = new Date().getTime();
 myNums.insertionSort();
-console.log(myNums.toString());
+stop = new Date().getTime();
+elapsed = stop - start;
+console.log("对" + numElements + "个元素执行插入排序消耗的时间为：" + elapsed + "毫秒"); */
+myNums.setData();
+start = new Date().getTime();
+myNums.shellsort();
+stop = new Date().getTime();
+elapsed = stop - start;
+console.log("对" + numElements + "个元素执行插入排序消耗的时间为：" + elapsed + "毫秒");
