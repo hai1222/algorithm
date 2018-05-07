@@ -16,6 +16,7 @@ function CArray(numElements) {
     this.setGaps = setGaps;
     this.mergeSort = mergeSort;
     this.mergeArrays = mergeArrays;
+    this.qSort = qSort;
 
     for (var i = 0; i < numElements; ++i) {
         this.dataStore[i] = i;
@@ -179,7 +180,26 @@ function mergeArrays(arr, startLeft, stopLeft, startRight, stopRight) {
     console.log("right array - " + rightArr);
 }
 
-var nums = [6, 10, 1, 9, 4, 8, 2, 7, 3, 5];
-console.log(nums);
-mergeSort(nums);
-console.log(nums);
+function qSort(list) {
+    if (list.length == 0) {
+        return [];
+    }
+    var lesser = [];
+    var greater = [];
+    var pivot = list[0];
+    for (var i = 1; i < list.length; i++) {
+        if (list[i] < pivot) {
+            lesser.push(list[i]);
+        } else {
+            greater.push(list[i]);
+        }
+    }
+    return qSort(lesser).concat(pivot, qSort(greater));
+}
+
+var a = [];
+for (var i = 0; i < 10; ++i) {
+    a[i] = Math.floor((Math.random()*100)+1);
+}
+console.log(a);
+console.log(qSort(a));
